@@ -1,5 +1,6 @@
 package com.picnic.training.springproperties;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -7,26 +8,17 @@ import javax.annotation.PostConstruct;
 import java.net.URL;
 
 @Component
-public class A {
+public class B {
 
-    @Value("${hello.prefix}")
-    private String prefix;
-
-    @Value("${hello.suffix}")
-    private String suffix;
-
-    @Value("${hello.greeting}")
-    private String greeting;
-
-    @Value("${hello.url}")
-    private URL url;
+   @Autowired
+   private AppConfig appConfig;
 
     @PostConstruct
     private void init() {
-        if(greeting == null || greeting.isBlank()) {
+        if(appConfig.getGreeting() == null || appConfig.getGreeting().isBlank()) {
             System.out.println("Warn: greeting should not be empty");
         }
-        System.out.println(url.getHost());
+        System.out.println(appConfig.getUrl().getHost());
     }
 
 }
